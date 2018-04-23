@@ -40,35 +40,35 @@ var Fortnite = (function() {
 
 	function fetchData(player, platform, stats) {
 		var options = {
-		  url: `https://api.fortnitetracker.com/v1/profile/${platform}/${player}`,
-		  headers: {
-		    'TRN-Api-Key': appKeys.fortniteKeys.key
-		  }
+			url: `https://api.fortnitetracker.com/v1/profile/${platform}/${player}`,
+			headers: {
+				'TRN-Api-Key': appKeys.fortniteKeys.key
+			}
 		};
 		function callback(error, response, body) {
-		  if (!error && response.statusCode == 200) {
-		  	console.log('FORTNITE STATS'.bold.red);
-		    var info = JSON.parse(body);
-		    // console.log(info);
-		    var data = {
-		    	name: info.epicUserHandle
-		    };
-		    var recentMatches = {};
+			if (!error && response.statusCode == 200) {
+				console.log('FORTNITE STATS'.bold.red);
+				var info = JSON.parse(body);
+				// console.log(info);
+				var data = {
+					name: info.epicUserHandle
+				};
+				var recentMatches = {};
 
-		    stats.forEach(function(element) {
+				stats.forEach(function(element) {
 					switch(element) {
-					    case 'Ranking':
-					        data.ranking = info.stats.p2.score.rank;
-					        break;
-					    case 'Total Top 3':
-					    		data.totalTop3 = info.lifeTimeStats[0].value;
-					    		break;
-					    case 'Total Top 5':
-					    		data.totalTop5 = info.lifeTimeStats[1].value;
-					    		break;
-					    case 'Total Top 25':
-					    		data.totalTop25 = info.lifeTimeStats[5].value;
-					    		break;
+							case 'Ranking':
+									data.ranking = info.stats.p2.score.rank;
+									break;
+							case 'Total Top 3':
+									data.totalTop3 = info.lifeTimeStats[0].value;
+									break;
+							case 'Total Top 5':
+									data.totalTop5 = info.lifeTimeStats[1].value;
+									break;
+							case 'Total Top 25':
+									data.totalTop25 = info.lifeTimeStats[5].value;
+									break;
 							case 'Total Matches Played':
 									data.totalMatchesPlayed = info.lifeTimeStats[7].value;
 									break;
@@ -85,17 +85,14 @@ var Fortnite = (function() {
 									recentMatches.match = getRecentMatches(info);
 									break;
 					}
-		    });
-		    
-		    logData(data);
-		    //if recent matches are selected, show recent matches
-		    if(recentMatches.match !== undefined) {
-		    	logMatches(recentMatches);	
-		    }
-		    
-		  }
+				});
+				logData(data);
+				//if recent matches are selected, show recent matches
+				if(recentMatches.match !== undefined) {
+					logMatches(recentMatches);	
+				}
+			}
 		}
-		 
 		request(options, callback);
 	}
 
@@ -147,6 +144,3 @@ var Fortnite = (function() {
 })();
 
 Fortnite.init();
-
-
- 
